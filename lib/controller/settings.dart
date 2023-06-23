@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chatgpt/utils/package.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert';
 
 class SettingsController extends GetxController {
   final isObscure = true.obs;
   final openAiKey = "".obs;
   final glmBaseUrl = "".obs;
 
-  final openAiBaseUrl = "https://api.openai-proxy.com".obs;
+  final openAiBaseUrl = "https://api.aiproxy.io".obs;
 
   final themeMode = ThemeMode.system.obs;
 
-  final gptModel = "gpt-3.5-turbo".obs;
+  final gptModel = "gpt-3.5-turbo-16k".obs;
 
   final locale = const Locale('zh').obs;
 
@@ -49,7 +51,7 @@ class SettingsController extends GetxController {
 
   getGlmBaseUrlFromPreferences() async {
     GetStorage _box = GetStorage();
-    String baseUrl = _box.read('glmBaseUrl') ?? "https://api.openai-proxy.com";
+    String baseUrl = _box.read('glmBaseUrl') ?? "https://api.aiproxy.io";
     setGlmBaseUrl(baseUrl);
   }
 
@@ -61,7 +63,26 @@ class SettingsController extends GetxController {
 
   getOpenAiKeyFromPreferences() async {
     GetStorage _box = GetStorage();
-    String key = _box.read('openAiKey') ?? "";
+    String? _key = _box.read('openAiKey'); 
+    String key;
+    if(_key != null) {
+      key = _key;
+    } else {
+      if(kIsWeb) {
+        final data = await rootBundle.loadString("assets/static/keys.json");
+        final jsonResult = jsonDecode(data.toString());
+        key = "sk-xx";
+        for (var item in jsonResult) {
+          if(item['provider'] == 'OpenAI') {
+            key = item['key'];
+            print("Loaded key from file");
+            break;
+          }
+        }
+      } else {
+        key = "sk-AH27KyRugtNKYyxa1n2RUMyJcR4K6uDy532kQZl1XtJoLlXT";
+      }
+    }
     setOpenAiKey(key);
   }
 
@@ -75,7 +96,7 @@ class SettingsController extends GetxController {
   getOpenAiBaseUrlFromPreferences() async {
     GetStorage _box = GetStorage();
     String baseUrl =
-        _box.read('openAiBaseUrl') ?? "https://api.openai-proxy.com";
+        _box.read('openAiBaseUrl') ?? "https://api.aiproxy.io";
     setOpenAiBaseUrl(baseUrl);
   }
 
@@ -87,7 +108,7 @@ class SettingsController extends GetxController {
 
   getGptModelFromPreferences() async {
     GetStorage _box = GetStorage();
-    String model = _box.read('gptModel') ?? "gpt-3.5-turbo";
+    String model = _box.read('gptModel') ?? "gpt-3.5-turbo-16k";
     setGptModel(model);
   }
 

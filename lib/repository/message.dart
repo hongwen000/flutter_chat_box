@@ -6,6 +6,7 @@ import 'package:flutter_chatgpt/data/if.dart';
 import 'package:flutter_chatgpt/data/llm.dart';
 import 'package:flutter_chatgpt/repository/conversation.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:flutter_chatgpt/utils/error_handling.dart';
 
 class MessageRepository {
   static final MessageRepository _instance = MessageRepository._internal();
@@ -26,8 +27,13 @@ class MessageRepository {
   }
 
   void init() {
-    OpenAI.apiKey = GetStorage().read('openAiKey') ?? "sk-xx";
-    OpenAI.baseUrl = GetStorage().read('openAiBaseUrl') ?? "sk-xx";
+    try {
+      OpenAI.apiKey = GetStorage().read('openAiKey') ?? "sk-xx";
+      OpenAI.baseUrl = GetStorage().read('openAiBaseUrl') ?? "sk-xx";
+    } catch (e) {
+      // Combine the message in e and 
+      throw DartOpenaiException(e.toString());
+    }
   }
 
   void _getResponseFromGpt(

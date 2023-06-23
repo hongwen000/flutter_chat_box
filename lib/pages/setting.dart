@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chatgpt/controller/settings.dart';
 import 'package:get/get.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class SettingPage extends GetResponsiveView<SettingsController> {
   SettingPage({super.key});
@@ -136,7 +137,7 @@ class SettingPage extends GetResponsiveView<SettingsController> {
                     },
                   )
                 : const SizedBox(),
-            controller.llm.value == "OpenAI"
+            (controller.llm.value == "OpenAI" && !kIsWeb)
                 ? TextFormField(
                     initialValue: controller.openAiKey.value,
                     decoration: InputDecoration(
@@ -153,18 +154,6 @@ class SettingPage extends GetResponsiveView<SettingsController> {
                         borderSide: BorderSide.none,
                       ),
                       filled: true,
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          Icons.remove_red_eye,
-                          color: controller.isObscure.value
-                              ? Colors.grey
-                              : Colors.blue,
-                        ),
-                        onPressed: () {
-                          controller.isObscure.value =
-                              !controller.isObscure.value;
-                        },
-                      ),
                     ),
                     autovalidateMode: AutovalidateMode.always,
                     maxLines: 1,
@@ -200,8 +189,9 @@ class SettingPage extends GetResponsiveView<SettingsController> {
                     ),
                     items: <String>[
                       'https://ai.fakeopen.com/',
-                      'https://api.openai-proxy.com',
-                      'https://api.openai.com'
+                      'https://api.aiproxy.io',
+                      'https://api.openai.com',
+                      'https://api.openai-proxy.com'
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,

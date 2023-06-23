@@ -1,3 +1,21 @@
 {
-  "cSpell.words": ["autovalidate", "chatgpt", "easyloading", "Getx", "sqflite"]
+  "cSpell.words": [
+    "autovalidate",
+    "chatgpt",
+    "easyloading",
+    "Getx",
+    "sqflite"
+  ],
+  "workbench.colorCustomizations": {
+    "[Default Light+]": {
+      "notebook.outputContainerBackgroundColor": "#ffffff"
+    },
+    "editor.selectionBackground": "#e788ff",
+    "editor.selectionHighlightBackground": "#ff0000",
+    "editor.findMatchBackground": "#00cc44a8",
+    "editor.findMatchHighlightBackground": "#ff7b00a1",
+    "activityBar.background": "#382C0B",
+    "titleBar.activeBackground": "#4F3D10",
+    "titleBar.activeForeground": "#FDFAF3"
+  }
 }
