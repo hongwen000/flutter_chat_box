@@ -1,8 +1,11 @@
 import 'package:dart_openai/dart_openai.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:platform/platform.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 
 class Conversation {
   String name;
@@ -84,11 +87,15 @@ class ConversationRepository {
 
   Future<Database> _getDb() async {
     if (_database == null) {
-      const Platform platform = LocalPlatform();
-      if (platform.isWindows || platform.isLinux || platform.isMacOS) {
-        // Initialize FFI
-        sqfliteFfiInit();
-        databaseFactory = databaseFactoryFfi;
+      if (kIsWeb) {
+        databaseFactory = databaseFactoryFfiWeb;
+      } else {
+        const Platform platform = LocalPlatform();
+        if (platform.isWindows || platform.isLinux || platform.isMacOS) {
+          // Initialize FFI
+          sqfliteFfiInit();
+          databaseFactory = databaseFactoryFfi;
+        }
       }
       final String path = join(await getDatabasesPath(), 'chatgpt.db');
       _database = await openDatabase(path, version: 1,

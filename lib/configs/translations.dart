@@ -4,7 +4,7 @@ class MyTranslations extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'en_US': {
-          "appTitle": "ChatGpt",
+          "appTitle": "<- 点击左侧菜单开启新对话",
           "toSecondPage": "to second page",
           "secondPage": "this is the second Page",
           "countTimes": "current total count is:",
@@ -32,7 +32,7 @@ class MyTranslations extends Translations {
           "gmlBaseUrl": "Please input chatglm base url"
         },
         'zh_CN': {
-          "appTitle": "ChatBot",
+          "appTitle": "<- 点击左侧菜单开启新对话",
           "toSecondPage": "去到第二页",
           "secondPage": "这里上第二页",
           "countTimes": "当前的数字是：",
@@ -45,8 +45,8 @@ class MyTranslations extends Translations {
           "language": "切换语言",
           "delete": "删除",
           "reName": "重命名",
-          "inputPrompt": "请输入你的 prompt",
-          "inputPromptTips": "在这里输入你的 prompt",
+          "inputPrompt": "请输入你和AI想聊的内容",
+          "inputPromptTips": "在这里输入你的和AI想聊的内容",
           "enterKey": "请输入你的 chatgpt key",
           "enterKeyTips": "请输在这里输入你的 chatgpt key",
           "setProxyUrl": "请输入代理Url",
