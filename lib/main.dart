@@ -1,5 +1,6 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chatgpt/controller/auth.dart';
 import 'package:flutter_chatgpt/controller/conversation.dart';
 import 'package:flutter_chatgpt/controller/message.dart';
 import 'package:flutter_chatgpt/controller/prompt.dart';
@@ -18,7 +19,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
     Get.put(ConversationController());
     Get.put(MessageController());
     Get.put(PromptController());
+    Get.put(AuthController()); // Add this line
     return GetMaterialApp(
       initialRoute: '/',
       getPages: routes,
