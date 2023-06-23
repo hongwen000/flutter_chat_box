@@ -15,7 +15,7 @@ class LoginPage extends StatelessWidget {
 
   Future<bool> _login(String username, String password) async {
     final response = await http.post(
-      Uri.parse('http://proxy.lixinrui000.cn:38591/login'),
+      Uri.parse('https://auth.lixinrui.tech:38591/login'),
       body: jsonEncode({
         'username': username,
         'password': password,
@@ -34,7 +34,7 @@ class LoginPage extends StatelessWidget {
     });
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('请输入用户名和密码'),
       ),
       body: Center(
         child: Padding(
