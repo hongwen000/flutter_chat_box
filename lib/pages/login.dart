@@ -8,6 +8,8 @@ import 'package:flutter_chatgpt/controller/auth.dart';
 class LoginPage extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final FocusNode _usernameFocus = FocusNode();
+
 
   LoginPage({super.key});
 
@@ -27,41 +29,83 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _usernameFocus.requestFocus();
+    });
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _usernameController,
-              decoration: const InputDecoration(hintText: '用户名'),
-            ),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(hintText: '密码'),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                var username = _usernameController.text;
-                var password = _passwordController.text;
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              TextField(
+                controller: _usernameController,
+                focusNode: _usernameFocus,
+                decoration: const InputDecoration(
+                  labelText: '用户名',
+                  filled: true,
+                  border: OutlineInputBorder(),
+                ),
+                onSubmitted: (_) async {
+                  var username = _usernameController.text;
+                  var password = _passwordController.text;
 
-                if (await _login(username, password)) {
-
-                  Get.find<AuthController>().isLoggedIn.value = true;
-                  Get.offAllNamed('/');  // this will take you to the home page
-                } else {
-                  EasyLoading.showError('登录失败，请检查用户名或密码');
+                  if (await _login(username, password)) {
+                    Get.find<AuthController>().isLoggedIn.value = true;
+                    Get.offAllNamed('/'); // this will take you to the home page
+                  } else {
+                    EasyLoading.showError('登录失败，请检查用户名或密码');
+                  }
                 }
-              },
-              child: const Text('登录'),
-            ),
-          ],
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: _passwordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: '密码',
+                  filled: true,
+                  border: OutlineInputBorder(),
+                ),
+                onSubmitted: (_) async {
+                  var username = _usernameController.text;
+                  var password = _passwordController.text;
+
+                  if (await _login(username, password)) {
+                    Get.find<AuthController>().isLoggedIn.value = true;
+                    Get.offAllNamed('/'); // this will take you to the home page
+                  } else {
+                    EasyLoading.showError('登录失败，请检查用户名或密码');
+                  }
+                },
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    var username = _usernameController.text;
+                    var password = _passwordController.text;
+
+                    if (await _login(username, password)) {
+                      Get.find<AuthController>().isLoggedIn.value = true;
+                      Get.offAllNamed('/'); // this will take you to the home page
+                    } else {
+                      EasyLoading.showError('登录失败，请检查用户名或密码');
+                    }
+                  },
+                  child: const Text('登录'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+  
 }

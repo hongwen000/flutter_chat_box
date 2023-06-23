@@ -5,13 +5,19 @@ import 'package:flutter_chatgpt/pages/setting.dart';
 import 'package:flutter_chatgpt/pages/login.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 
 
 class AuthMiddleware extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
-    final isLoggedIn = Get.find<AuthController>().isLoggedIn.value;
-    return isLoggedIn ? null : const RouteSettings(name: '/login');
+    if(kIsWeb) {
+      final isLoggedIn = Get.find<AuthController>().isLoggedIn.value;
+      return isLoggedIn ? null : const RouteSettings(name: '/login');
+    } else {
+      return null;
+    }
   }
 }
 
