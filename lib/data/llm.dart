@@ -28,7 +28,11 @@ class ChatGpt extends LLM {
         openAIMessages.insert(
           0,
           OpenAIChatCompletionChoiceMessageModel(
-            content: message.text,
+            content: [
+              OpenAIChatCompletionChoiceMessageContentItemModel.text(
+              message.text,
+              ),
+            ],
             role: message.role.asOpenAIChatMessageRole,
           ),
         );
@@ -46,9 +50,13 @@ class ChatGpt extends LLM {
       chatStream.listen(
         (chatStreamEvent) {
           if (chatStreamEvent.choices.first.delta.content != null) {
-            message.text =
-                message.text + chatStreamEvent.choices.first.delta.content!;
-            onResponse(message);
+            final contentItemModel = chatStreamEvent.choices.first.delta.content!;
+            // ContentItemModel should has at least one item
+            if (contentItemModel.isNotEmpty) {
+              final String contentString = contentItemModel.first!.text!;
+              message.text = message.text + contentString;
+              onResponse(message);
+            }
           }
         },
         onError: (error) {
@@ -69,8 +77,13 @@ class ChatGpt extends LLM {
           model: GetStorage().read("gptModel") ?? "gpt-3.5-turbo",
           messages: openAIMessages,
         );
-        message.text = response.choices.first.message.content;
-        onSuccess(message);
+        final contentItemModel = response.choices.first.message.content;
+        // ContentItemModel should has at least one item
+        if (contentItemModel!.isNotEmpty) {
+          final String contentString = contentItemModel.first.text!;
+          message.text = message.text + contentString;
+          onSuccess(message);
+        }
       } catch (e) {
         message.text = e.toString();
         errorCallback(message);
