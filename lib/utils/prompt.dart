@@ -6,7 +6,7 @@ import 'package:flutter/services.dart' show rootBundle;
 
 
 const RAW_FILE_URL = "https://raw.githubusercontent.com/";
-const MIRRORF_FILE_URL = "https://raw.fgit.ml/";
+const MIRRORF_FILE_URL = "https://gh-proxy.com/https://raw.githubusercontent.com";
 
 Future<List<Prompt>> getPrompts() async {
   final List<Prompt> prompts = [];
