@@ -21,9 +21,42 @@ class ChatGpt extends LLM {
     messages = messages.reversed.toList();
     // 将messages里面的每条消息的内容取出来拼接在一起
     String content = "";
+    String currentModel = SettingsController.to.gptModel.value;
+    int maxTokenLength = 1800;
+    switch (currentModel) {
+      case "gpt-3.5-turbo":
+      case "gpt-3.5-turbo-0125":
+      case "gpt-3.5-turbo-1106":
+      case "gpt-3.5-turbo-16k":
+      case "gpt-3.5-turbo-16k-0613":
+        maxTokenLength = 16385 ~/ 2;
+        break;
+      case "gpt-4-0125-preview":
+      case "gpt-4-turbo-preview":
+      case "gpt-4-1106-preview":
+      case "gpt-4-vision-preview":
+      case "gpt-4-1106-vision-preview":
+        maxTokenLength = 128000 ~/ 2;
+        break;
+      case "gpt-4":
+      case "gpt-4-0613":
+        maxTokenLength = 8192 ~/ 2;
+        break;
+      case "gpt-4-32k":
+      case "gpt-4-32k-0613":
+        maxTokenLength = 32768 ~/ 2;
+        break;
+      case "gpt-3.5-turbo-instruct":
+      case "gpt-3.5-turbo-0613":
+        maxTokenLength = 4096 ~/ 2;
+        break;
+      default:
+        maxTokenLength = 1800;
+        break;
+    }
     for (Message message in messages) {
       content = content + message.text;
-      if (content.length < 1800 || openAIMessages.isEmpty) {
+      if (content.length < maxTokenLength || openAIMessages.isEmpty) {
         // 插入到 openAIMessages 第一个位置
         openAIMessages.insert(
           0,
