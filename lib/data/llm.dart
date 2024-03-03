@@ -52,7 +52,11 @@ class ChatGpt extends LLM {
           }
         },
         onError: (error) {
-          message.text = error.message;
+          try {
+            message.text = error.message;
+          } catch (_) {
+            message.text = error.toString();
+          }
           errorCallback(message);
         },
         onDone: () {
