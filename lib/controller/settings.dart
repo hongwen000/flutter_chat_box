@@ -108,7 +108,7 @@ class SettingsController extends GetxController {
 
   getGptModelFromPreferences() async {
     GetStorage _box = GetStorage();
-    String model = _box.read('gptModel') ?? "gpt-3.5-turbo-16k";
+    String model = _box.read('gptModel') ?? "gpt-4o";
     setGptModel(model);
   }
 

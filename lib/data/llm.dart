@@ -46,6 +46,9 @@ class ChatGpt extends LLM {
       case "gpt-4-32k-0613":
         maxTokenLength = 32768 ~/ 2;
         break;
+      case "gpt-4-o":
+        maxTokenLength = 32768 * 4 ~/ 2;
+        break;
       case "gpt-3.5-turbo-instruct":
       case "gpt-3.5-turbo-0613":
         maxTokenLength = 4096 ~/ 2;
