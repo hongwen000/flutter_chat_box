@@ -15,7 +15,7 @@ class SettingsController extends GetxController {
 
   final themeMode = ThemeMode.system.obs;
 
-  final gptModel = "gpt-3.5-turbo-16k".obs;
+  final gptModel = "gpt-4o".obs;
 
   final locale = const Locale('zh').obs;
 
