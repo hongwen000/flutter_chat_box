@@ -13,6 +13,8 @@ class SettingPage extends GetResponsiveView<SettingsController> {
         title: Text('settings'.tr),
       ),
       body: GetX<SettingsController>(builder: (controller) {
+        final TextEditingController keyController = TextEditingController();
+
         return ListView(
           children: [
             const Divider(),
@@ -137,15 +139,18 @@ class SettingPage extends GetResponsiveView<SettingsController> {
                     },
                   )
                 : const SizedBox(),
-            (controller.llm.value == "OpenAI" && !kIsWeb)
-                ? TextFormField(
-                    initialValue: controller.openAiKey.value,
+            (controller.llm.value == "OpenAI")
+                ? Column(
+                    children: [
+                      TextFormField(
+                        controller: keyController,
                     decoration: InputDecoration(
                       labelText: 'enterKey'.tr,
                       hintText: 'enterKey'.tr,
                       labelStyle: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(Get.context!).colorScheme.primary),
+                              color:
+                                  Theme.of(Get.context!).colorScheme.primary),
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
@@ -157,10 +162,15 @@ class SettingPage extends GetResponsiveView<SettingsController> {
                     ),
                     autovalidateMode: AutovalidateMode.always,
                     maxLines: 1,
-                    onFieldSubmitted: (value) {
-                      controller.setOpenAiKey(value);
-                    },
                     obscureText: controller.isObscure.value,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          controller.setOpenAiKey(keyController.text);
+                        },
+                        child: Text('submitKey'.tr),
+                      ),
+                    ],
                   )
                 : const SizedBox(),
             controller.llm.value == "OpenAI"
