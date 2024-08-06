@@ -47,7 +47,7 @@ class MyTranslations extends Translations {
           "reName": "重命名",
           "inputPrompt": "请输入你和AI想聊的内容",
           "inputPromptTips": "在这里输入你的和AI想聊的内容",
-          "enterKey": "请输入你的 chatgpt key",
+          "enterKey": "在这里更新你的 chatgpt key",
           "enterKeyTips": "请输在这里输入你的 chatgpt key",
           "setProxyUrl": "请输入代理Url",
           "setProxyUrlTips": "请在这里设置代理Url",

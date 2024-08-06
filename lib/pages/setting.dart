@@ -14,6 +14,28 @@ class SettingPage extends GetResponsiveView<SettingsController> {
       ),
       body: GetX<SettingsController>(builder: (controller) {
         final TextEditingController keyController = TextEditingController();
+        final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+        void _submitKey() {
+          if (keyController.text?.isEmpty ?? true) {
+            Get.snackbar(
+              'Error',
+              'API Key cannot be empty!',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+            );
+          } else {
+            controller.setOpenAiKey(keyController.text);
+            Get.snackbar(
+              'Success',
+              'API Key has been updated successfully!',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.green,
+              colorText: Colors.white,
+            );
+          }
+        }
 
         return ListView(
           children: [
@@ -140,18 +162,23 @@ class SettingPage extends GetResponsiveView<SettingsController> {
                   )
                 : const SizedBox(),
             (controller.llm.value == "OpenAI")
-                ? Column(
+                ? Row(
                     children: [
-                      TextFormField(
+                      Expanded(
+                        child: Form(
+                          key: _formKey,
+                          child: TextFormField(
                         controller: keyController,
                     decoration: InputDecoration(
                       labelText: 'enterKey'.tr,
                       hintText: 'enterKey'.tr,
                       labelStyle: TextStyle(
                           fontWeight: FontWeight.bold,
-                              color:
-                                  Theme.of(Get.context!).colorScheme.primary),
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
+                                  color: Theme.of(Get.context!)
+                                      .colorScheme
+                                      .primary),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.auto,
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
                       border: OutlineInputBorder(
@@ -163,11 +190,11 @@ class SettingPage extends GetResponsiveView<SettingsController> {
                     autovalidateMode: AutovalidateMode.always,
                     maxLines: 1,
                     obscureText: controller.isObscure.value,
+                          ),
+                        ),
                       ),
                       ElevatedButton(
-                        onPressed: () {
-                          controller.setOpenAiKey(keyController.text);
-                        },
+                        onPressed: _submitKey,
                         child: Text('submitKey'.tr),
                       ),
                     ],
@@ -250,6 +277,7 @@ class SettingPage extends GetResponsiveView<SettingsController> {
                       'gpt-3.5-turbo-0125',
                       'gpt-4',
                       'gpt-4o',
+                      'gpt-4o-mini',
                       'gpt-4-0613',
                       'gpt-4-32k',
                       'gpt-4-32k-0613',
