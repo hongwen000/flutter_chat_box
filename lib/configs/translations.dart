@@ -29,7 +29,8 @@ class MyTranslations extends Translations {
           "useStreamApi": "Use Stream API",
           "gptModel": "Select GPT Model",
           "llmHint": "Select LLM Model",
-          "gmlBaseUrl": "Please input chatglm base url"
+          "gmlBaseUrl": "Please input chatglm base url",
+          "aiThinking": "AI is thinking..."
         },
         'zh_CN': {
           "appTitle": "<- 点击左侧菜单开启新对话",
@@ -56,7 +57,8 @@ class MyTranslations extends Translations {
           "useStreamApi": "使用流式(Stream) API",
           "gptModel": "选择 GPT Model",
           "llmHint": "选择大语言模型",
-          "gmlBaseUrl": "请输入chatglm代理Url"
+          "gmlBaseUrl": "请输入chatglm代理Url",
+          "aiThinking": "AI正在思考中..."
         }
       };
 }

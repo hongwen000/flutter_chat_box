@@ -11,11 +11,11 @@ class SettingsController extends GetxController {
   final openAiKey = "".obs;
   final glmBaseUrl = "".obs;
 
-  final openAiBaseUrl = "https://openrouter.ai".obs;
+  final openAiBaseUrl = "https://openrouter.ai/api".obs;
 
   final themeMode = ThemeMode.system.obs;
 
-  final gptModel = "gpt-4o".obs;
+  final gptModel = "google/gemini-2.5-flash-preview-05-20".obs;
 
   final locale = const Locale('zh').obs;
 
@@ -51,7 +51,7 @@ class SettingsController extends GetxController {
 
   getGlmBaseUrlFromPreferences() async {
     GetStorage _box = GetStorage();
-    String baseUrl = _box.read('glmBaseUrl') ?? "https://openrouter.ai";
+    String baseUrl = _box.read('glmBaseUrl') ?? "https://openrouter.ai/api";
     setGlmBaseUrl(baseUrl);
   }
 
@@ -71,7 +71,7 @@ class SettingsController extends GetxController {
       if(kIsWeb) {
         final data = await rootBundle.loadString("assets/static/keys.json");
         final jsonResult = jsonDecode(data.toString());
-        key = "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";
+        key = "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";
         for (var item in jsonResult) {
           if(item['provider'] == 'OpenAI') {
             key = item['key'];
@@ -80,7 +80,7 @@ class SettingsController extends GetxController {
           }
         }
       } else {
-        key = "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";
+        key = "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";
       }
     }
     setOpenAiKey(key);
@@ -96,7 +96,7 @@ class SettingsController extends GetxController {
   getOpenAiBaseUrlFromPreferences() async {
     GetStorage _box = GetStorage();
     String baseUrl =
-        _box.read('openAiBaseUrl') ?? "https://openrouter.ai";
+        _box.read('openAiBaseUrl') ?? "https://openrouter.ai/api";
     setOpenAiBaseUrl(baseUrl);
   }
 
@@ -108,7 +108,7 @@ class SettingsController extends GetxController {
 
   getGptModelFromPreferences() async {
     GetStorage _box = GetStorage();
-    String model = _box.read('gptModel') ?? "gpt-4o";
+    String model = _box.read('gptModel') ?? "google/gemini-2.5-flash-preview-05-20";
     setGptModel(model);
   }
 

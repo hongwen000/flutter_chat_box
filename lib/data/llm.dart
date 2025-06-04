@@ -31,6 +31,9 @@ class ChatGpt extends LLM {
       case "gpt-3.5-turbo-16k-0613":
         maxTokenLength = 16385 ~/ 2;
         break;
+      case "google/gemini-2.5-flash-preview-05-20:thinking":
+      case "google/gemini-2.5-flash-preview-05-20":
+      case "openai/gpt-4.1":
       case "gpt-4-0125-preview":
       case "gpt-4-turbo-preview":
       case "gpt-4-1106-preview":
@@ -81,7 +84,7 @@ class ChatGpt extends LLM {
     if (SettingsController.to.useStream.value) {
       Stream<OpenAIStreamChatCompletionModel> chatStream = OpenAI.instance.chat
           .createStream(
-              model: GetStorage().read("gptModel") ?? "gpt-3.5-turbo",
+              model: GetStorage().read("gptModel") ?? "google/gemini-2.5-flash-preview-05-20",
               messages: openAIMessages);
       chatStream.listen(
         (chatStreamEvent) {
@@ -110,7 +113,7 @@ class ChatGpt extends LLM {
     } else {
       try {
         var response = await OpenAI.instance.chat.create(
-          model: GetStorage().read("gptModel") ?? "gpt-3.5-turbo",
+          model: GetStorage().read("gptModel") ?? "google/gemini-2.5-flash-preview-05-20",
           messages: openAIMessages,
         );
         final contentItemModel = response.choices.first.message.content;

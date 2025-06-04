@@ -36,11 +36,15 @@ class _ChatWindowState extends State<ChatWindow> {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   _scrollToNewMessage();
                 });
-                if (controller.messageList.isNotEmpty) {
+                if (controller.messageList.isNotEmpty || controller.isLoading.value) {
                   return ListView.builder(
                     controller: _scrollController,
-                    itemCount: controller.messageList.length,
+                    itemCount: controller.messageList.length + (controller.isLoading.value ? 1 : 0),
                     itemBuilder: (context, index) {
+                      if (index == controller.messageList.length && controller.isLoading.value) {
+                        // 显示加载指示器
+                        return _buildLoadingCard();
+                      }
                       return _buildMessageCard(controller.messageList[index]);
                     },
                   );
@@ -234,6 +238,53 @@ class _ChatWindowState extends State<ChatWindow> {
         (value.isKeyPressed(LogicalKeyboardKey.enter) && value.isMetaPressed)) {
       _sendMessage();
     }
+  }
+
+  Widget _buildLoadingCard() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(width: 10),
+            const FaIcon(FontAwesomeIcons.robot),
+            const SizedBox(width: 5),
+            const Text("assistant"),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Card(
+                elevation: 8,
+                margin: const EdgeInsets.all(8),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "aiThinking".tr,
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   void _scrollToNewMessage() {

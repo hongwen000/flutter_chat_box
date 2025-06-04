@@ -29,7 +29,7 @@ class MessageRepository {
   void init() {
     try {
       OpenAI.apiKey = GetStorage().read('openAiKey') ?? "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";
-      OpenAI.baseUrl = GetStorage().read('openAiBaseUrl') ?? "https://openrouter.ai";
+      OpenAI.baseUrl = GetStorage().read('openAiBaseUrl') ?? "https://openrouter.ai/api";
     } catch (e) {
       // Combine the message in e and 
       throw DartOpenaiException(e.toString());
