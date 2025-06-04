@@ -11,7 +11,7 @@ class SettingsController extends GetxController {
   final openAiKey = "".obs;
   final glmBaseUrl = "".obs;
 
-  final openAiBaseUrl = "https://api.aiproxy.io".obs;
+  final openAiBaseUrl = "https://openrouter.ai".obs;
 
   final themeMode = ThemeMode.system.obs;
 
@@ -51,7 +51,7 @@ class SettingsController extends GetxController {
 
   getGlmBaseUrlFromPreferences() async {
     GetStorage _box = GetStorage();
-    String baseUrl = _box.read('glmBaseUrl') ?? "https://api.aiproxy.io";
+    String baseUrl = _box.read('glmBaseUrl') ?? "https://openrouter.ai";
     setGlmBaseUrl(baseUrl);
   }
 
@@ -71,7 +71,7 @@ class SettingsController extends GetxController {
       if(kIsWeb) {
         final data = await rootBundle.loadString("assets/static/keys.json");
         final jsonResult = jsonDecode(data.toString());
-        key = "sk-xx";
+        key = "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";
         for (var item in jsonResult) {
           if(item['provider'] == 'OpenAI') {
             key = item['key'];
@@ -80,7 +80,7 @@ class SettingsController extends GetxController {
           }
         }
       } else {
-        key = "sk-AH27KyRugtNKYyxa1n2RUMyJcR4K6uDy532kQZl1XtJoLlXT";
+        key = "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";
       }
     }
     setOpenAiKey(key);
@@ -96,7 +96,7 @@ class SettingsController extends GetxController {
   getOpenAiBaseUrlFromPreferences() async {
     GetStorage _box = GetStorage();
     String baseUrl =
-        _box.read('openAiBaseUrl') ?? "https://api.aiproxy.io";
+        _box.read('openAiBaseUrl') ?? "https://openrouter.ai";
     setOpenAiBaseUrl(baseUrl);
   }
 

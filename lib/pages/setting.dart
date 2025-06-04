@@ -226,7 +226,7 @@ class SettingPage extends GetResponsiveView<SettingsController> {
                     ),
                     items: <String>[
                       'https://ai.fakeopen.com/',
-                      'https://api.aiproxy.io',
+                      'https://openrouter.ai',
                       'https://api.openai.com',
                       'https://api.openai-proxy.com'
                     ].map<DropdownMenuItem<String>>((String value) {
@@ -282,7 +282,7 @@ class SettingPage extends GetResponsiveView<SettingsController> {
                       'gpt-4-32k',
                       'gpt-4-32k-0613',
                       'gpt-4-1106-preview',
-                      'gpt-4-0125-preview'
+                      'gpt-4-0125-preview',
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
