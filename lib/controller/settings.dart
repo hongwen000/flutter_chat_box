@@ -71,7 +71,7 @@ class SettingsController extends GetxController {
       if(kIsWeb) {
         final data = await rootBundle.loadString("assets/static/keys.json");
         final jsonResult = jsonDecode(data.toString());
-        key = "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";
+        key = "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";
         for (var item in jsonResult) {
           if(item['provider'] == 'OpenAI') {
             key = item['key'];
@@ -80,7 +80,7 @@ class SettingsController extends GetxController {
           }
         }
       } else {
-        key = "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";
+        key = "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";
       }
     }
     setOpenAiKey(key);
